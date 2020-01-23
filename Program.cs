@@ -112,7 +112,16 @@ namespace Sysinfo
                         runningProgram.DisplayStorageDetail();
                         break;
                     case "4":
-                        runningProgram.MakeAComment();
+                        if (runningProgram.MakeAComment())
+                        {
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("The comment has saved.");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.ReadLine();
+                        }
                         break;
                     case "5":
                         runningProgram.SerializeMyList();
@@ -233,7 +242,7 @@ namespace Sysinfo
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.Write("PID: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(Convert.ToString(oneProcess.Id).PadLeft(6));
+                Console.Write(Convert.ToString(oneProcess.Id).PadLeft(5));
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.Write("  Name: ");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -320,7 +329,7 @@ namespace Sysinfo
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
         }
-        public void MakeAComment()
+        public bool MakeAComment()
         {
             int id;
             string idString;
@@ -344,7 +353,6 @@ namespace Sysinfo
                 }
             }
             Console.Write("Comment? : ");
-            
             comment = Console.ReadLine();
             foreach (Storage oneProcess in StorageOfProcessesList)
             {
@@ -352,6 +360,7 @@ namespace Sysinfo
                 {
                     oneProcess.Comment = comment;
                     found = true;
+                    return true;
                 }
             }
             if (found == false)
@@ -363,7 +372,9 @@ namespace Sysinfo
                 Console.WriteLine("Press any key to continue...");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.ReadLine();
+                return false;
             }
+            return false;
         }
         /*public void Threads()
         {
