@@ -1,0 +1,11 @@
+/Users/JarmyZ/Projects/Sysinfo/bin/Debug/netcoreapp3.1/Sysinfo
+/Users/JarmyZ/Projects/Sysinfo/bin/Debug/netcoreapp3.1/Sysinfo.deps.json
+/Users/JarmyZ/Projects/Sysinfo/bin/Debug/netcoreapp3.1/Sysinfo.runtimeconfig.json
+/Users/JarmyZ/Projects/Sysinfo/bin/Debug/netcoreapp3.1/Sysinfo.runtimeconfig.dev.json
+/Users/JarmyZ/Projects/Sysinfo/bin/Debug/netcoreapp3.1/Sysinfo.dll
+/Users/JarmyZ/Projects/Sysinfo/bin/Debug/netcoreapp3.1/Sysinfo.pdb
+/Users/JarmyZ/Projects/Sysinfo/obj/Debug/netcoreapp3.1/Sysinfo.csprojAssemblyReference.cache
+/Users/JarmyZ/Projects/Sysinfo/obj/Debug/netcoreapp3.1/Sysinfo.AssemblyInfoInputs.cache
+/Users/JarmyZ/Projects/Sysinfo/obj/Debug/netcoreapp3.1/Sysinfo.AssemblyInfo.cs
+/Users/JarmyZ/Projects/Sysinfo/obj/Debug/netcoreapp3.1/Sysinfo.dll
+/Users/JarmyZ/Projects/Sysinfo/obj/Debug/netcoreapp3.1/Sysinfo.pdb
