@@ -40,7 +40,9 @@ namespace Sysinfo
             {
                 string choice;
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Welcome to System Informations! (please choose a number)");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
                 Console.Write("XML file status:    ");
                 if (File.Exists("myxml.xml") == false)
