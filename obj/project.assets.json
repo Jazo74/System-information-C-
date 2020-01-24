@@ -20,7 +20,7 @@
       "outputPath": "/Users/JarmyZ/Projects/Sysinfo/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/JarmyZ/.config/NuGet/NuGet.Config"
+        "/Users/JarmyZ/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

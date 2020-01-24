@@ -11,7 +11,8 @@ namespace Sysinfo
     {
         public static List<Storage> StorageOfProcessesList = new List<Storage>();
         bool offline = true;
-        static void Main(string[] args)
+
+        static void Main(string[] args) // two possible parameter "old", "preload"
         {
             if (args.Length != 0 && args[0] == "preload")
             {
@@ -30,7 +31,7 @@ namespace Sysinfo
                 Program myProgram = new Program();
                 myProgram.Menu(myProgram);
             }
-        }
+        } 
 
         public void Menu(Program runningProgram) // main menu 
         {
@@ -81,7 +82,8 @@ namespace Sysinfo
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 Console.WriteLine();
-                Console.WriteLine("(1) Gathering or refreshing datas");
+                Console.WriteLine("(0) Gathering or refreshing datas");
+                Console.WriteLine("(1) Show all process all datas");
                 Console.WriteLine("(2) Show all process ID and name");
                 Console.WriteLine("(3) Show a process data");
                 Console.WriteLine("(4) Make a comment");
@@ -97,13 +99,16 @@ namespace Sysinfo
 
                 switch (choice)
                 {
-                    case "1":
+                    case "0":
                         runningProgram.GatheringProcessData();
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(StorageOfProcessesList.Count + " process data has collected!");
                         Console.ForegroundColor = ConsoleColor.White;
                         Thread.Sleep(2000);
                         runningProgram.offline = false; 
+                        break;
+                    case "1":
+                        runningProgram.DisplayStorageAll();
                         break;
                     case "2":
                         runningProgram.DisplayStorageBase();
@@ -146,7 +151,7 @@ namespace Sysinfo
                         break;
                     case "9":
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Bye, bye!");
+                        Console.WriteLine("Thank you for using our service! Have a nice day citizen!");
                         Console.ForegroundColor = ConsoleColor.White;
                         loop = false;
                         break;
@@ -159,7 +164,7 @@ namespace Sysinfo
                 }
             }
         }
-        public void GatheringProcessData()
+        public void GatheringProcessData() // gathering and storing the datas of all processes
         {
             Process[] processes = Process.GetProcesses();
             StorageOfProcessesList.Clear();
@@ -170,7 +175,7 @@ namespace Sysinfo
                     Storage myStorage = new Storage();
                     myStorage.Id = singleProcess.Id;
                     myStorage.ProcessName = singleProcess.ProcessName;
-                    myStorage.MemoryUsage = singleProcess.WorkingSet64;
+                    myStorage.MemoryUsage = singleProcess.WorkingSet64 / 1024;
                     myStorage.ThreadCount = singleProcess.Threads.Count;
 
                     try
@@ -193,8 +198,8 @@ namespace Sysinfo
                     StorageOfProcessesList.Add(myStorage);
                 }
             }
-        }
-        public void SerializeMyList()
+        } 
+        public void SerializeMyList() // serializing the data to an xml file
         {
             XmlSerializer xmlBuild = new XmlSerializer(StorageOfProcessesList.GetType());
             FileStream file = new FileStream("myxml.xml", FileMode.Create);
@@ -204,8 +209,8 @@ namespace Sysinfo
             Console.WriteLine("The Serialization has completed.");
             Console.ForegroundColor = ConsoleColor.White;
             Thread.Sleep(2000);
-        }
-        public bool DeSerializeMyList()
+        } 
+        public bool DeSerializeMyList() // deserializing the the date from an xml file
         {
             XmlSerializer xmlBuild = new XmlSerializer(StorageOfProcessesList.GetType());
             if (File.Exists("myxml.xml"))
@@ -229,8 +234,8 @@ namespace Sysinfo
             Console.ForegroundColor = ConsoleColor.White;
             Thread.Sleep(3000);
             return false;
-        }
-        public void DisplayStorageBase()
+        } 
+        public void DisplayStorageBase() // displaying all the data (just PID and Name)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
@@ -253,7 +258,46 @@ namespace Sysinfo
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
         }
-        public void DisplayStorageDetail()
+        public void DisplayStorageAll() // displaying all the data (just PID and Name)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Current processes...");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+            foreach (Storage oneProcess in StorageOfProcessesList)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write(" PID: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(Convert.ToString(oneProcess.Id).PadLeft(5));
+
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write(" Mem: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(Convert.ToString(oneProcess.MemoryUsage).PadLeft(7));
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+                Console.Write(" Start: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(Convert.ToString(oneProcess.StartTime).PadRight(22));
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+                Console.Write(" RunTill: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(Convert.ToString(oneProcess.RunningTime).PadLeft(15));
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+                Console.Write("  Name: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(oneProcess.ProcessName);
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Press any key to continue...");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
+        }
+        public void DisplayStorageDetail() // displaying datas of one process
         {
             int id;
             string idString;
@@ -329,7 +373,7 @@ namespace Sysinfo
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
         }
-        public bool MakeAComment()
+        public bool MakeAComment() // puting a comment to a process
         {
             int id;
             string idString;
@@ -376,27 +420,5 @@ namespace Sysinfo
             }
             return false;
         }
-        /*public void Threads()
-        {
-            int id;
-            bool found = false;
-            Console.Write("Process ID? : ");
-            id = int.Parse(Console.ReadLine());
-            foreach (Storage oneProcess in StorageOfProcessesList)
-            {
-                if (oneProcess.Id == id)
-                {
-                    Console.WriteLine(Process.GetProcessById(id).Threads.Count);
-                    
-                    found = true;
-                }
-            }
-            if (found == false)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("There is no process with this ID!");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-        }*/
     }
 }
