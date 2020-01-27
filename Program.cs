@@ -124,10 +124,8 @@ namespace Sysinfo
                             Console.WriteLine();
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("The comment has saved.");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Press any key to continue...");
+                            Thread.Sleep(2000);
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.ReadLine();
                         }
                         break;
                     case "5":
@@ -278,6 +276,7 @@ namespace Sysinfo
                 Console.Write(" Mem: ");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(Convert.ToString(oneProcess.MemoryUsage).PadLeft(7));
+                Console.Write(" kB");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
 
                 Console.Write(" Start: ");
@@ -339,7 +338,8 @@ namespace Sysinfo
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.Write("Memory usage: ");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine(oneProcess.MemoryUsage);
+                    Console.Write(oneProcess.MemoryUsage);
+                    Console.WriteLine(" kB");
 
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.Write("Start time: ");
